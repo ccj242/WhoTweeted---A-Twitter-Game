@@ -1,0 +1,41 @@
+/* Empty. Add your own CSS if you like */
+
+.modal{
+  top: 0 ;
+  bottom: 0 ; 
+  left: 0 ;
+  right: 0 ;
+  width: 100% ;
+}
+
+.popup{
+margin-top: -20vmin;
+
+}
+
+body {
+font-family: "Helvetica Neue";
+
+}
+.button.button-icon.input-button {
+  position: absolute;
+  right: 0;
+  top: 5px;
+  color: #bbb;
+}
+.item img {
+  height: 60px;
+  width: 60px;
+  float: left;
+  margin-right: 10px;
+}
+.list .my-item.item {
+  left: 0;
+  right: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.link{
+  color:blue;
+}

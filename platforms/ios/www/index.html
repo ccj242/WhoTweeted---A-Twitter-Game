@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <title></title>
+
+    <link rel="manifest" href="manifest.json">
+
+    <!-- un-comment this code to enable service worker
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('service-worker.js')
+          .then(() => console.log('service worker installed'))
+          .catch(err => console.log('Error', err));
+      }
+    </script>-->
+
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+
+    <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
+    <link href="css/ionic.app.css" rel="stylesheet">
+    -->
+
+    <!-- ionic/angularjs js -->
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+
+    <!-- cordova script (this will be a 404 during development) -->
+  <!--  <script src="cordova.js"></script>-->
+
+    <!-- your app's js -->
+    <script src="js/app.js"></script>
+    <script src="js/ngStorage.min.js"></script>
+    <!---->
+      <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+<script src=cordova.js></script>
+<script src=cordova_plugins.js></script>
+
+  </head>
+  <style>
+    
+    .modal{
+      background-color:rgba(255,255,255,.94);
+    }
+  </style>
+  <body ng-app="starter" ng-controller="AppCtrl"  class="platform-ios platform-cordova platform-webview">
+<ion-pane ng-cloak>
+<ion-content ng-cloak>
+      <!--
+      <i ng-click="openModalmenu()" style="position:absolute;left:5vw;top:1.8vh;font-size:7vmin;z-index:999 !important;color:#E3655B" class="icon ion-navicon"></i>
+-->
+  <i ng-if="!menu" ng-click="openModalmenu()" style="position:absolute;right:4vw;top:calc(1.2vh + 18px);font-size:5.4vh;z-index:999 !important;color:white" class="icon ion-navicon-round"></i>
+  <i ng-if="menu" ng-click="closeModalmenu()" style="position:absolute;right:4vw;top:calc(.5vh + 18px);font-size:6.2vh;z-index:999 !important;color:white" class="icon ion-arrow-return-left"></i>
+
+
+    <span style="position:absolute;left:2vw;top:calc(3.1vh + 18px);font-size:7.5vh;z-index:999 !important;color:white;letter-spacing: -.5vmin !important">Who<b>Tweet</b>ed</span>
+<div style="position:absolute;background-color:#4099FF;height:calc(7vh + 18px);width:100%"></div>
+
+<div style="font-size:3.7vmax;line-height:3.7vmax;padding-top:calc(7.7vh + 18px);padding-left:2vmax;padding-right:2vmax" compile="tweet">
+
+  </div>
+  <!--
+  <img src={{corr.status.entities.media[0].media_url}}>
+  -->
+
+  <div style="color:rgb(106,120,131) !important;padding-left:2vmax;font-size:2.5vmax;padding-top:1vmax">
+  <b>
+  <span ng-if="corr.status.created_at">
+{{corr.status.created_at |date:'h:mm a MMM d'}} 
+</span>
+<span style="padding-left:10px;color:rgb(106,120,131) !important" class="icon ion-arrow-return-right">
+{{corr.status.retweet_count | number}}
+</span>
+<span style="padding-left:10px;color:rgb(106,120,131) !important"  class="icon ion-heart">
+{{corr.status.favorite_count | number}}
+</span>
+</b>
+</div>
+  <!--<div>{{url}}</div>-->
+
+<hr>
+<!--
+<ion-content style="height:300px;padding-top:30vh">
+-->
+  <div ng-repeat="possible in possibles" ng-click="guess($index)" style="">
+
+
+  <img onerror="errorfunc(this)" style="width:14.5vmax;height:12vmax;max-width:150px;max-height:150px;float:left;padding-right:1vmax;padding-left:.5vmax;padding-bottom:2px;margin-top:-5px" src="{{possible.profile_image_url}}">
+
+<b style="font-size:2.8vmax">{{possible.name}}</b>
+ 
+   <img style="height:2.3vmax" src="img/checkmark.png">
+    
+<div ng-click="follow($index)"; style="float:right;padding-right:.5vmax;z-index:99999">
+<img style="width:11vmax;z-index:9999" src="img/follow.png"><br>
+
+ <div style="margin-top:-5px;font-size:2vmax;color:rgb(106,120,131);float:right;padding-right:5px"><b>{{possible.followers_count | number}}</b></div>
+</div>
+
+  <!--
+   <img style="width:500px" src="{{possible.profile_background_image_url}}">
+-->
+ 
+<!--
+<span style="font-size:10px;color:rgb(106,120,131)">@{{possible.screen_name}}</span>
+-->
+<br>
+<!---->
+<div style="font-size:2vmax;color:rgb(106,120,131);max-height:80px !important;line-height:2vmax;margin-left:70px;margin-right:18vw;overflow:hidden">
+{{possible.description}}
+</div>
+
+<div>
+<hr style="width:100%">
+</div>
+<!--<br>
+{{possible.description}}<br>
+followers: {{possible.followers_count}}
+-->
+  </div>
+
+
+        <div style="z-index:999999999999999 !important;text-align:center;padding-top:0vmin;background-color:transparent">
+
+      <img class="button" ng-click="facebook()" src="img/1.svg" class="pointer" style="width:15vmin;max-width:100px;z-index:99999999999999 !important;padding-left:.6vmin;padding-right:.6vmin;background-color:transparent !important">
+
+      <img class="button"  ng-click="twitter()" src="img/2.svg" class="pointer" style="width:15vmin;max-width:100px;z-index:9999 !important;padding-left:.6vmin;padding-right:.6vmin;background-color:transparent !important">
+      <img class="button" ng-click="googleplus()" class="pointer" src="img/3.svg" style="width:15vmin;max-width:100px;z-index:9999 !important;padding-left:.6vmin;padding-right:.6vmin;background-color:transparent !important">
+      <!--
+      <img ng-click="github()" class="pointer" src="img/github.svg" style="width:8%">
+      -->
+      
+<br>
+<span style="font-size:3.5vmin">
+<b>© 2017</b> Christopher Cinq-Mars Jarvis 
+</span>
+      </div>
+  
+
+
+      </ion-content>
+    </ion-pane>
+     
+     <script id="menu.html" type="text/ng-template">
+  <ion-modal-view style="margin-top:calc(6.8vh + 18px)">
+  <ion-content>
+<div style="font-size:4.5vmin;margin-top:1vh;line-height:3vmin;color:black;padding-left:4vmin"> a game by <b>Christopher Cinq-Mars Jarvis</b></div></div>
+<div style="padding-left:5vw; padding-right:3vw;font-size:6vmin;padding-top:1.9vh;line-height:6vmin">To play simply guess who <b>tweeted</b> the statement at the top of the screen</div>
+
+<div ng-if="record[1]>0" style="text-align:center;font-size:5vmin;line-height:5vmin;padding-top:2vh">
+        <b>{{record[0]}}</b> correct of <b>{{record[1]}}</b> answered <br><b style="color:rgb({{(Math.floor((1-record[0]/record[1])*100))*3}},{{Math.floor(record[0]/record[1]*100)*3}},50)">{{Math.floor(record[0]/record[1]*100)}}%</b> accurate <b ng-click="confirm()" style="color:blue">reset?</b>
+        </div>
+
+<!--
+
+ <div style="padding-left:5vw; padding-right:3vw;font-size:4vmin;padding-top:1vh;line-height:3vmin"><span style="text-decoration: underline; color:#33adff" ng-click="resetgame()"><i  style="font-style: italic;font-size:3.5vmin">Want to <b>reset</b> your game and score?</span><br><br><span style="font-size:3vmin">The game uses the <u ng-click="window.open('http://www.politifact.com')"><b>Politifact API</b></u> and we wish to express our sincere thanks and admiration to them for their important work. </span> </i><br><br>
+ <span style="text-decoration: underline; color:#33adff" ng-click="closeModalmenu();openModalstats();"><i  style="font-style: italic;font-size:3.5vmin">Game <b>stats</b> are saved and analyzed online</span><br></div>
+ -->
+
+ <!--
+  <div style="padding-left:3vw; padding-right:3vw;font-size:4vmin;padding-top:5vh;text-align:center">Other Projects</div>-->
+<br>
+<div style="width:25%;float:left">
+<img ng-click="jarvisfilms()" src="img/me.png" style="width:25vmin">
+</div>
+<div ng-click="jarvisfilms()" style="width:74%;float:right;font-size:3.2vmin;padding-top:1vh;padding-right:2vmin;font-style: italic;line-height:3vmin;padding-bottom:1vh">
+Christopher Cinq-Mars Jarvis is a filmmaker and game developer. His last game, Synonymy, was showcased at E3, featured at GDC and is narrated by biologist and author Richard Dawkins. He is also a filmmaker and has received a Student Academy Award nomination and top prizes at several Oscar-qualifying festivals.  He runs a non-profit organization, Cinq-Mars Media.
+</div>
+<hr style="width:100% !important">
+
+<div style="text-align:center;width:100% !important;padding-top:0vh">
+<b style="font-size:5vmin">Other Projects</b><br><br>
+<img ng-click="synonymy()" src="img/512.png" style="padding-left:1vmin;padding-right:1vmin;width:22vmin;max-width:150px">
+<img ng-click="birds()" src="img/birds.png" style="padding-left:1vmin;padding-right:1vmin;width:22vmin;max-width:150px">
+
+<img ng-click="tmm()" src="img/example.png" style="padding-left:1vmin;padding-right:1vmin;width:22vmin;max-width:150px">
+<img ng-click="wordunk()" src="img/wordunknown.png" style="padding-left:1vmin;padding-right:1vmin;width:22vmin;max-width:150px">
+
+<img ng-click="polititruth()" src="img/politiTruth.png" style="padding-left:1vmin;padding-right:1vmin;width:22vmin;max-width:150px">
+<img ng-click="caissa()" src="img/chess-icon.png" style="padding-left:1vmin;padding-right:1vmin;width:22vmin;max-width:150px">
+<img ng-click="iconic()" src="img/iconic.png" style="padding-left:1vmin;padding-right:1vmin;width:22vmin;max-width:150px">
+<img ng-click="sugarsweet()" src="img/sugarsweet.png" style="padding-left:1vmin;padding-right:1vmin;width:22vmin;max-width:150px">
+
+<br>
+<br>
+<span ng-click="jarvisfilms()" style="font-size:3vmin">
+<b>© 2017</b> Christopher Cinq-Mars Jarvis 
+</span>
+</div>
+
+</ion-content>
+  </ion-modal-view>
+</script>
+<!--
+ <script id="modal.html" type="text/ng-template">
+  <ion-modal-view style="background-color:rgba(0,0,0,.5) !important">
+  <ion-content>
+
+</ion-content>
+  </ion-modal-view>
+  -->
+</script>
+
+  </body>
+
+</html>
+
+
